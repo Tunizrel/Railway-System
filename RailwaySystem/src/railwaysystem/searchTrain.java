@@ -9,17 +9,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import static railwaysystem.addTrain.stations;
 
 /**
  *
@@ -30,42 +26,16 @@ public class searchTrain extends javax.swing.JInternalFrame {
     /**
      * Creates new form addRoute
      */
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Connection con; 
     PreparedStatement pst;
-    String tid, sid, name,eid,Arrival_time,Departure_time;
-    Date Arrival,Departure;
-    String DBuser="root";
-    String DBpassword="123456789ABC";
-    String Driver="com.mysql.cj.jdbc.Driver";
-    String URL= "jdbc:mysql://localhost:3306/traindb";
-    public static ArrayList<String> stations = new ArrayList<String>();
-   
-    
+    String tid, sid, name;
     public searchTrain() {
         initComponents();
         updateDepartSidComboBox();
         updateArriveSidComboBox();
+        
         updateComboBox();
-        updateArrayListStations();
-    }
-     public void updateArrayListStations() {
-        try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            Statement s = con.createStatement();
-            ResultSet rs;
-            rs = s.executeQuery("select SID from station");
-            while(rs.next()){
-                stations.add(rs.getString("Sid"));
-            }
-        }catch (ClassNotFoundException ex) {
-            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+        addTrain.updateArrayListStations();
     }
 
     /**
@@ -85,16 +55,16 @@ public class searchTrain extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         trainBrand = new javax.swing.JTextField();
         trainNoSeat = new javax.swing.JTextField();
+        trainArrivalTime = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        trainDepartureTime = new javax.swing.JTextField();
         coachIdComboBox = new javax.swing.JComboBox<>();
         departSidComboBox = new javax.swing.JComboBox<>();
         arriveSidComboBox = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        trainDepartureTime = new com.toedter.calendar.JDateChooser();
-        trainArrivalTime = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         searchTrainId = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
@@ -108,20 +78,20 @@ public class searchTrain extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        updateTimeRoute = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         updateSidRouteTXT = new javax.swing.JTextField();
         updateLocationRouteTXT = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
-        updateTimeRoute = new com.toedter.calendar.JDateChooser();
-        jButton5 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        AddRoute = new javax.swing.JTable();
+        route = new javax.swing.JTable();
+        addTime = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        addTime = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -150,6 +120,12 @@ public class searchTrain extends javax.swing.JInternalFrame {
             }
         });
 
+        trainArrivalTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trainArrivalTimeActionPerformed(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Depart");
@@ -157,6 +133,12 @@ public class searchTrain extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Arrive");
+
+        trainDepartureTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trainDepartureTimeActionPerformed(evt);
+            }
+        });
 
         coachIdComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         coachIdComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +187,21 @@ public class searchTrain extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(72, 72, 72)
+                                .addComponent(trainArrivalTime, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(trainDepartureTime)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(departSidComboBox, 0, 165, Short.MAX_VALUE)
+                            .addComponent(arriveSidComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -219,28 +216,13 @@ public class searchTrain extends javax.swing.JInternalFrame {
                             .addComponent(trainNoSeat, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                             .addComponent(trainBrand, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                             .addComponent(coachIdComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(77, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(trainDepartureTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(trainArrivalTime, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(departSidComboBox, 0, 165, Short.MAX_VALUE)
-                                    .addComponent(arriveSidComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(14, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addGap(63, 63, 63))))))
+                        .addContainerGap(77, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(63, 63, 63))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(327, Short.MAX_VALUE)
@@ -272,14 +254,16 @@ public class searchTrain extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(departSidComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(trainDepartureTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(trainDepartureTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(arriveSidComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(trainArrivalTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(trainArrivalTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(arriveSidComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton4))
@@ -391,6 +375,13 @@ public class searchTrain extends javax.swing.JInternalFrame {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Time");
 
+        jButton5.setText("Update Time");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("You can only change the stop-at time");
 
@@ -398,23 +389,10 @@ public class searchTrain extends javax.swing.JInternalFrame {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Station ID");
 
-        updateLocationRouteTXT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateLocationRouteTXTActionPerformed(evt);
-            }
-        });
-
         jButton7.setText("Remove");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Update Time");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
             }
         });
 
@@ -436,17 +414,17 @@ public class searchTrain extends javax.swing.JInternalFrame {
                             .addComponent(jLabel17))
                         .addGap(86, 86, 86)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(updateSidRouteTXT, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(updateLocationRouteTXT)
-                            .addComponent(updateTimeRoute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(updateTimeRoute, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(updateSidRouteTXT)
+                            .addComponent(updateLocationRouteTXT)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jLabel12)))
                 .addContainerGap(42, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(66, 66, 66)
                 .addComponent(jButton5)
-                .addGap(71, 71, 71)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton7)
                 .addGap(80, 80, 80))
         );
@@ -466,19 +444,19 @@ public class searchTrain extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(updateLocationRouteTXT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(66, 66, 66)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
-                    .addComponent(updateTimeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton5))
+                    .addComponent(updateTimeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton7))
                 .addGap(32, 32, 32))
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
 
-        AddRoute.setModel(new javax.swing.table.DefaultTableModel(
+        route.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -494,12 +472,12 @@ public class searchTrain extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        AddRoute.addMouseListener(new java.awt.event.MouseAdapter() {
+        route.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddRouteMouseClicked(evt);
+                routeMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(AddRoute);
+        jScrollPane2.setViewportView(route);
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -514,7 +492,7 @@ public class searchTrain extends javax.swing.JInternalFrame {
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Add new route");
+        jLabel15.setText("Addd new route");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -523,20 +501,17 @@ public class searchTrain extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(jButton6)
-                                .addGap(61, 61, 61))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addGap(68, 68, 68))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(addTime, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(addTime, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(68, 68, 68))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addGap(61, 61, 61))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addComponent(jLabel15)
@@ -555,7 +530,7 @@ public class searchTrain extends javax.swing.JInternalFrame {
                         .addGap(40, 40, 40)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addTime, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)))
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -626,106 +601,84 @@ public class searchTrain extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
+        tableModel.setRowCount(0);
         
-            DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
-            tableModel.setRowCount(0);
-
-            String tid = searchTrainId.getText();
-            String brand = trainBrand.getText();
-            String noSeat = trainNoSeat.getText();
-            String coachID = coachIdComboBox.getSelectedItem().toString();
-
-            String departureStationID = departSidComboBox.getSelectedItem().toString();
-            String arrivalStationID = arriveSidComboBox.getSelectedItem().toString();
-
-            // Date format handling
+        String tid = searchTrainId.getText();
+        String brand = trainBrand.getText();
+        String noSeat = trainNoSeat.getText();
+        String coachID = coachIdComboBox.getSelectedItem().toString();
+        String departureTime = trainDepartureTime.getText();
+        String arrivalTime = trainArrivalTime.getText();
+       
+        String departureStationID =departSidComboBox.getSelectedItem().toString();
+        
+        String arrivalStationID = arriveSidComboBox.getSelectedItem().toString();
+        
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            pst = con.prepareStatement("update Train set Brand= ?,  Num_of_seat = ?,  [Coach.ID]=?,  Depart_time=?,  Arrival_time = ?, [DT.ID] =? , [A.ID] = ? where Tid = ?");
            
-            String departureTime = sdf.format(trainDepartureTime.getDate());
-            String arrivalTime = sdf.format(trainArrivalTime.getDate());
-
-            try {
-               
-                Class.forName(Driver);
-                String connectionUrl = URL;
-                con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
-
-                // Update Train Table
-                pst = con.prepareStatement("UPDATE Train SET Brand = ?, No_seat = ?, Coach_ID = ?, Departure_time = ?, Arrival_time = ?, DT_Id = ?, A_Id = ? WHERE Tid = ?");
-                pst.setString(1, brand);
-                pst.setString(2, noSeat);
-                pst.setString(3, coachID);
-                pst.setString(4, departureTime);
-                pst.setString(5, arrivalTime);
-                pst.setString(6, departureStationID);
-                pst.setString(7, arrivalStationID);
-                pst.setString(8, tid);
-                pst.executeUpdate();
-
-                JOptionPane.showMessageDialog(null, "Updated!");
-
-                // Determine Stop At Stations
-                // Determine Stop At Stations
-                String s1, s2;
-                if (stations.indexOf(arriveSidComboBox.getSelectedItem().toString()) > stations.indexOf(departSidComboBox.getSelectedItem().toString())) {
-                    s1 = departSidComboBox.getSelectedItem().toString();
-                    s2 = arriveSidComboBox.getSelectedItem().toString();
-                } else {
-                    s1 = arriveSidComboBox.getSelectedItem().toString();
-                    s2 = departSidComboBox.getSelectedItem().toString();
-                }
-
-                // Build the list of intermediate stations
-                StringBuilder stopAtStations = new StringBuilder();
-                for (int i = 0; i < addTrain.stations.size(); i++) {
-                    if (i > addTrain.stations.indexOf(s1) && i < addTrain.stations.indexOf(s2)) {
-                        stopAtStations.append("'").append(addTrain.stations.get(i)).append("'");
-                        if (i == addTrain.stations.indexOf(s2) - 1) break;
-                        stopAtStations.append(", ");
-                    }
-                }
-
-                // Check if the list is empty
-                if (stopAtStations.length() > 0) {
-                    // Delete Stops Not In List
-                    String deleteQuery = "DELETE FROM Stop_at WHERE Tid = ? AND Sid NOT IN (" + stopAtStations + ")";
-                    pst = con.prepareStatement(deleteQuery);
-                    pst.setString(1, tid);
-                    pst.executeUpdate();
-                } else {
-                    // If no intermediate stations, delete all stops except start and end
-                    String deleteQuery = "DELETE FROM Stop_at WHERE Tid = ? AND Sid NOT IN (?, ?)";
-                    pst = con.prepareStatement(deleteQuery);
-                    pst.setString(1, tid);
-                    pst.setString(2, s1);
-                    pst.setString(3, s2);
-                    pst.executeUpdate();
-                }
-
-                // Fetch Updated Stop_at Entries
-                PreparedStatement s = con.prepareStatement("SELECT Sid, Time FROM Stop_at WHERE Tid = ?");
-                s.setString(1, tid);
-                ResultSet rs1 = s.executeQuery();
-
-                tableModel.setRowCount(0);
-
-                while (rs1.next()) {
-                    String stopAtSid = rs1.getString("Sid");
-                    String stopAtTime = rs1.getString("Time");
-
-                    String table[] = {stopAtSid, stopAtTime};
-                    tableModel.addRow(table);
-                }
-
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Driver not found!");
-            } catch (SQLException ex) {
-                Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Date error: " + ex.getMessage());
+            pst.setString(1,brand);
+            pst.setString(2,noSeat);
+            pst.setString(3,coachID);
+            pst.setString(4,departureTime );
+            pst.setString(5, arrivalTime);
+            pst.setString(6,departureStationID);
+            pst.setString(7,arrivalStationID);
+            pst.setString(8,tid);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Updated!");
+            
+            String s2;
+            String s1 ;
+            if (stations.indexOf(arriveSidComboBox.getSelectedItem().toString())>stations.indexOf(departSidComboBox.getSelectedItem().toString())) {
+            
+            s1 = departSidComboBox.getSelectedItem().toString();
+            s2= arriveSidComboBox.getSelectedItem().toString();
+        } else {
+            
+            s2 = departSidComboBox.getSelectedItem().toString();
+            s1= arriveSidComboBox.getSelectedItem().toString();
+        }
+            System.out.println(s1 +" " + s2);
+            String stopAtStations="";
+        for (int i = 0;i<addTrain.stations.size();i++) {
+            if (i>addTrain.stations.indexOf(s1) && i<addTrain.stations.indexOf(s2)) {
+                stopAtStations+= "'"+addTrain.stations.get(i)+"'";
+                if (i==addTrain.stations.indexOf(s2)-1) break;
+                stopAtStations+= ", ";             
             }
+        }
+            System.out.println(stopAtStations);
+            System.out.println(stations);
+            
+            pst = con.prepareStatement("delete from Stopat where Tid = ? and Sid not in (?)");
+            pst.setString(1,tid);
+            pst.setString(2,stopAtStations);
+            pst.executeUpdate();
+            
+            PreparedStatement s = con.prepareStatement("select Sid, Time from Stopat where Tid = ?");
+            s.setString(1,tid);
+            ResultSet rs1 = s.executeQuery();
+            
+            tableModel.setRowCount(0);
+            
+            while(rs1.next()){
+                String stopAtSid = rs1.getString("Sid");
+                String stopAtTime= rs1.getString("Time");
+    
+                String table[] = {stopAtSid,stopAtTime};
+                tableModel.addRow(table);
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -734,18 +687,26 @@ public class searchTrain extends javax.swing.JInternalFrame {
         this.hide();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void trainArrivalTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainArrivalTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trainArrivalTimeActionPerformed
+
+    private void trainDepartureTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainDepartureTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trainDepartureTimeActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
         tableModel.setRowCount(0);
-         tid = searchTrainId.getText();
+        String tid = searchTrainId.getText();
         try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
             
             
-            pst = con.prepareStatement("select Brand, No_seat, Coach_ID, Departure_time,Arrival_time,DT_Id,A_Id from Train where Tid = ?");
+            pst = con.prepareStatement("select Brand, Num_of_seat, [Coach.ID], CONVERT(VARCHAR(5),Depart_time,108) as Depart_time,CONVERT(VARCHAR(5),Arrival_time,108) as Arrival_time,[DT.ID],[A.ID] from Train where Tid = ?");
             pst.setString(1,tid);
             ResultSet rs = pst.executeQuery();
             
@@ -753,62 +714,43 @@ public class searchTrain extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Not found");
             } else {
                 String brand = rs.getString("Brand");
-                String noSeat = rs.getString("No_seat");
-                String coachId =rs.getString("Coach_ID");
-                String departureTime = rs.getString("Departure_time");
+                String noSeat = rs.getString("Num_of_seat");
+                String coachId =rs.getString("Coach.ID");
+                String departureTime = rs.getString("Depart_time");
                 String arrivalTime = rs.getString("Arrival_time");
-                String departureStationId = rs.getString("DT_Id");
-                String arrivalStationId = rs.getString("A_Id");
-
-                Date depart = new SimpleDateFormat("yyyy-MM-dd").parse(departureTime);
-                Date arrive = new SimpleDateFormat("yyyy-MM-dd").parse(arrivalTime);
-                Arrival = rs.getDate("Arrival_time");
-                Departure = rs.getDate("Departure_time");
+                String departureStationId = rs.getString("DT.ID");
+                String arrivalStationId = rs.getString("A.ID");
 
              
-            
-
-        // Display values
-            trainBrand.setText(brand.trim());
-            trainNoSeat.setText(noSeat.trim());
-            coachIdComboBox.getModel().setSelectedItem(coachId);
-            trainDepartureTime.setDate(depart);
-            trainArrivalTime.setDate(arrive);
-            departSidComboBox.setSelectedItem(departureStationId.trim());
-            arriveSidComboBox.setSelectedItem(arrivalStationId.trim());
+               //displaying...
+               trainBrand.setText(brand.trim());
+               trainNoSeat.setText(noSeat.trim());
+               coachIdComboBox.getModel().setSelectedItem(coachId);
+               trainDepartureTime.setText(departureTime.trim());
+               trainArrivalTime.setText(arrivalTime.trim());
+               departSidComboBox.setSelectedItem(departureStationId.trim());
+               arriveSidComboBox.setSelectedItem(arrivalStationId.trim());
             }
             
-            PreparedStatement s = con.prepareStatement(
-        "SELECT Stop_at.Sid AS Sid, Time , Station.Name AS Name " +
-        "FROM Stop_at " +
-        "JOIN Station ON Stop_at.Sid = Station.Sid " +
-        "WHERE Tid = ? " +
-        "ORDER BY time ASC"
-    );
-            s.setString(1, tid); // Set the train ID parameter
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
+            s.setString(1,tid);
             ResultSet rs1 = s.executeQuery();
-
-    // Populate table
-     tableModel = (DefaultTableModel) stopAtTable.getModel();
-    tableModel.setRowCount(0); // Clear existing rows
-
-    while (rs1.next()) {
-        String stopAtSid = rs1.getString("Sid");
-        String stopAtTime = rs1.getString("Time");
-        String stopAtName = rs1.getString("Name");
-
-        String[] table = {stopAtSid, stopAtName, stopAtTime};
-        tableModel.addRow(table);
-    }
-    //Route Table
-    updateAddRouteTable();
-    
+            
+            while(rs1.next()){
+                String stopAtSid = rs1.getString("Sid");
+                String stopAtTime= rs1.getString("Time");
+                String stopAtName = rs1.getString("Name");
+                
+                String table[] = {stopAtSid,stopAtName,stopAtTime};
+                
+                
+                tableModel.addRow(table);
+            }
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(searchPassenger.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(searchPassenger.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(searchTrain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -821,38 +763,35 @@ public class searchTrain extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_coachIdComboBoxActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
-        eid = coachIdComboBox.getSelectedItem().toString();
+        // TODO add your handling code here:
+        String tid = searchTrainId.getText();
+        String eid = coachIdComboBox.getSelectedItem().toString();
         try {
-    Class.forName(Driver);  
-    String connectionUrl = URL;
-    con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
-
-    pst = con.prepareStatement("update Employee set Tid = NULL , Sid = NULL where Eid = ?");
-    pst.setString(1, eid);
-    pst.executeUpdate();
-
-    // Step 2: Delete from Booking
-    pst = con.prepareStatement("DELETE FROM Booking WHERE Tid = ?");
-    pst.setString(1, tid);
-    pst.executeUpdate();
-
-    // Step 3: Delete from Stop_at
-    pst = con.prepareStatement("DELETE FROM Stop_at WHERE Tid = ?");
-    pst.setString(1, tid);
-    pst.executeUpdate();
-
-    // Step 4: Delete from Train
-    pst = con.prepareStatement("DELETE FROM Train WHERE Tid = ?");
-    pst.setString(1, tid);
-    pst.executeUpdate();
-
-    JOptionPane.showMessageDialog(null, "Removed!");
-} catch (ClassNotFoundException ex) {
-    Logger.getLogger(searchEmployee.class.getName()).log(Level.SEVERE, null, ex);
-} catch (SQLException ex) {
-    Logger.getLogger(searchEmployee.class.getName()).log(Level.SEVERE, null, ex);
-}
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            
+            pst = con.prepareStatement("update Employee set Tid = null where Eid = ?");
+            pst.setString(1,eid);
+            pst.executeUpdate();
+            
+            pst = con.prepareStatement("Delete from Stopat Where Tid = ?");
+            pst.setString(1,tid);
+            pst.executeUpdate();
+            
+            pst = con.prepareStatement("Delete from Train Where Tid = ?");
+            pst.setString(1,tid);
+            pst.executeUpdate();
+            
+            
+            
+            JOptionPane.showMessageDialog(null, "Removed!");
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(searchEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(searchEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void stopAtTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopAtTableMouseClicked
@@ -862,25 +801,25 @@ public class searchTrain extends javax.swing.JInternalFrame {
     
         
         int selectIndex=stopAtTable.getSelectedRow();
-         tid = searchTrainId.getText();
+        String tid = searchTrainId.getText();
         
         String sid = tableModel.getValueAt(selectIndex, 0).toString();
         System.out.println(sid);
         try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            Connection con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            Connection con = DriverManager.getConnection(connectionUrl);
             
             
-            pst = con.prepareStatement("select Time, Stop_at.Sid, Location from Stop_at, Station where Stop_at.Sid = Station.Sid and Stop_at.Sid= ? and Stop_at.Tid = ?");
+            pst = con.prepareStatement("select CONVERT(VARCHAR(5),Time,108) as Time, Stopat.Sid, Name from Stopat, Station where Stopat.Sid = Station.Sid and Stopat.Sid= ? and Stopat.Tid = ?");
             pst.setString(1,sid);
             pst.setString(2,tid);
             ResultSet rs = pst.executeQuery();
             rs.next();
-            String location = rs.getString("Location");
-            Date time = rs.getDate("Time");
+            String location = rs.getString("Name");
+            String time = rs.getString("Time");
             
-            updateTimeRoute.setDate(time);
+            updateTimeRoute.setText(time.trim());
             updateLocationRouteTXT.setText(location.trim());
             updateSidRouteTXT.setText(sid.trim());
             
@@ -896,29 +835,24 @@ public class searchTrain extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_departSidComboBoxActionPerformed
 
-    private void AddRouteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRouteMouseClicked
+    private void routeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_routeMouseClicked
         // TODO add your handling code here:
-        int selectIndex=AddRoute.getSelectedRow();
-         sid = AddRoute.getValueAt(selectIndex, 0).toString();
+        int selectIndex=route.getSelectedRow();
+         sid = route.getValueAt(selectIndex, 0).toString();
          tid = searchTrainId.getText();
          
 
-    }//GEN-LAST:event_AddRouteMouseClicked
+    }//GEN-LAST:event_routeMouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         
-        String time = sdf.format(addTime.getDate());
-        
+        String time = addTime.getText();
         try {
-            if (addTime.getDate().after(Arrival)|| addTime.getDate().before(Departure)) {
-                JOptionPane.showMessageDialog(null, "Invalid date!");
-                return; // Exit method if the date is invalid
-            }
-            Class.forName(Driver);
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            pst = con.prepareStatement("insert into Stop_at(Time,Tid,Sid) values(?,?,?)");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            pst = con.prepareStatement("insert into Stopat(Time,Tid,Sid) values(?,?,?)");
 
             pst.setString(1,time);
             pst.setString(2, tid);
@@ -930,7 +864,7 @@ public class searchTrain extends javax.swing.JInternalFrame {
             DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
             tableModel.setRowCount(0);
             
-            PreparedStatement s = con.prepareStatement("select Stop_at.Sid as Sid, Time, Station.Name as Name from Stop_at, Station where Stop_at.Sid = Station.Sid and Tid = ? order by Time ASC");
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
             s.setString(1,tid);
             ResultSet rs1 = s.executeQuery();
             
@@ -957,16 +891,17 @@ public class searchTrain extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         
+        
         String tid = searchTrainId.getText();
         String sid = updateSidRouteTXT.getText();
         
-        String time = sdf.format(updateTimeRoute.getDate());
+        String time = updateTimeRoute.getText();
         
         try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            pst = con.prepareStatement("update Stop_at set Time = ? where Tid= ? and  Sid = ? ");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            pst = con.prepareStatement("update Stopat set Time = ? where Tid= ? and  Sid = ? ");
             
             pst.setString(1,time);
             pst.setString(3,sid);
@@ -978,7 +913,7 @@ public class searchTrain extends javax.swing.JInternalFrame {
             DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
             tableModel.setRowCount(0);
             
-            PreparedStatement s = con.prepareStatement("select Stop_at.Sid as Sid,  Time, Station.Name as Name from Stop_at, Station where Stop_at.Sid = Station.Sid and Tid = ? order by Time ASC");
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
             s.setString(1,tid);
             ResultSet rs1 = s.executeQuery();
             
@@ -999,117 +934,80 @@ public class searchTrain extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
     private void updateAddRouteTable() {
-    tid = searchTrainId.getText();
-ArrayList<String> stopAtSids = new ArrayList<>();
-DefaultTableModel tableModel = (DefaultTableModel) AddRoute.getModel();
-tableModel.setRowCount(0);  // Clear the table before updating it
-
-String s1 = departSidComboBox.getSelectedItem().toString();
-String s2 = arriveSidComboBox.getSelectedItem().toString();
-boolean isDescending = stations.indexOf(s2) < stations.indexOf(s1);
-String order = isDescending ? "DESC" : "ASC";
-
-// Generate stopAtStations list
-List<String> stopAtStationsList = new ArrayList<>();
-int startIndex = Math.min(stations.indexOf(s1), stations.indexOf(s2));
-int endIndex = Math.max(stations.indexOf(s1), stations.indexOf(s2));
-
-// Add intermediate stations to the list
-for (int i = startIndex + 1; i < endIndex; i++) {
-    stopAtStationsList.add(stations.get(i));
-}
-System.out.println(stopAtSids);
-
-if (stopAtStationsList.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "No intermediate stations between the selected points.");
-    return;
-}
-
-try {
-    // Ensure the JDBC driver is loaded
-    Class.forName(Driver);
-    String connectionUrl = URL;
-    con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
-
-    // Fetch existing stations for the train
-    PreparedStatement psStopAt = con.prepareStatement(
-        "SELECT Stop_at.Sid AS Sid FROM Stop_at WHERE Tid = ?");
-    psStopAt.setString(1, tid);
-    ResultSet rs1 = psStopAt.executeQuery();
-
-    while (rs1.next()) {
-        stopAtSids.add(rs1.getString("Sid"));
-    }
-
-    // Prepare the dynamic placeholders for the query
-    StringBuilder stopAtStationsPlaceholders = new StringBuilder();
-    if (!stopAtStationsList.isEmpty()) {
-        for (int i = 0; i < stopAtStationsList.size(); i++) {
-            stopAtStationsPlaceholders.append("?");
-            if (i < stopAtStationsList.size() - 1) {
-                stopAtStationsPlaceholders.append(", ");
+        String tid = searchTrainId.getText();
+        ArrayList<String> stopAtSids = new ArrayList<String>();
+        DefaultTableModel tableModel = (DefaultTableModel) route.getModel();
+        tableModel.setRowCount(0);
+        String s2;
+        String s1 ;
+        String order="";
+        if (stations.indexOf(arriveSidComboBox.getSelectedItem().toString())>stations.indexOf(departSidComboBox.getSelectedItem().toString())) {
+            System.out.println("haha");
+            s1 = departSidComboBox.getSelectedItem().toString();
+            s2= arriveSidComboBox.getSelectedItem().toString();
+            order = "order by Sid DESC";
+        } else {
+            Collections.reverse(stations);
+            System.out.println("huhu");
+            s2 = departSidComboBox.getSelectedItem().toString();
+            s1= arriveSidComboBox.getSelectedItem().toString();
+        }
+        String stopAtStations="";
+        for (int i = 0;i<stations.size();i++) {
+            if (i>stations.indexOf(s1) && i<stations.indexOf(s2)) {
+                stopAtStations+= "'"+stations.get(i)+"'";
+                if (i==stations.indexOf(s2)-1) break;
+                stopAtStations+= ", ";             
             }
         }
-    }
-
-    StringBuilder stopAtSidsPlaceholders = new StringBuilder();
-    if (!stopAtSids.isEmpty()) {
-        for (int i = 0; i < stopAtSids.size(); i++) {
-            stopAtSidsPlaceholders.append("?");
-            if (i < stopAtSids.size() - 1) {
-                stopAtSidsPlaceholders.append(", ");
+        System.out.println(stopAtStations);
+        
+        
+        
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
+            s.setString(1,tid);
+            ResultSet rs1 = s.executeQuery();
+            String stopAtSidsString="";
+            while(rs1.next()){
+                stopAtSids.add(rs1.getString("Sid"));
+                
             }
+            
+            for (int i =0;i<stopAtSids.size();i++) {
+                stopAtSidsString+="'"+stopAtSids.get(i)+"'";
+                if (i==stopAtSids.size()-1) break;
+                stopAtSidsString+= ", ";
+            }
+            
+            System.out.println(stopAtSidsString);
+            
+            Statement stm = con.createStatement();
+            ResultSet rs2 = stm.executeQuery("select Sid, Name from Station where Sid in (" + stopAtStations +") and Sid not in (" + stopAtSidsString + ") " + order + " ;");
+         
+ 
+            while(rs2.next()){
+                
+                String stopAt = rs2.getString("Sid");
+                String name = rs2.getString("Name");           
+                
+                String table[] = {stopAt,name};
+                
+                
+                tableModel.addRow(table);
+            
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    // Construct the SQL query with dynamic placeholders
-    String sql = "SELECT Sid, Name FROM Station WHERE 1=1"; // Start with a basic condition
-
-    // Only add the dynamic filters if the lists are not empty
-    if (stopAtStationsPlaceholders.length() > 0) {
-        sql += " AND Sid IN (" + stopAtStationsPlaceholders + ")";
-    }
-    if (stopAtSidsPlaceholders.length() > 0) {
-        sql += " AND Sid NOT IN (" + stopAtSidsPlaceholders + ")";
-    }
-
-    // Add the order clause
-    sql += " ORDER BY Sid " + order;
-
-    // Prepare the statement with the constructed SQL query
-    PreparedStatement psStation = con.prepareStatement(sql);
-
-    // Set parameters for stopAtStations
-    int index = 1;
-    for (String station : stopAtStationsList) {
-        psStation.setString(index++, station);
-    }
-
-    // Set parameters for stopAtSids
-    for (String sid : stopAtSids) {
-        psStation.setString(index++, sid);
-    }
-
-    // Execute the query and populate the table
-    ResultSet rs2 = psStation.executeQuery();
-
-    while (rs2.next()) {
-        String stopAt = rs2.getString("Sid");
-        String name = rs2.getString("Name");
-
-        // Add rows to the table model
-        String[] tableRow = {stopAt, name};
-        tableModel.addRow(tableRow);
-    }
-
-} catch (ClassNotFoundException ex) {
-    Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, "JDBC Driver not found", ex);
-} catch (SQLException ex) {
-    Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, "Database error", ex);
-} 
-     
-    }
-    
+    }                                                 
     
     
     private void arriveSidComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arriveSidComboBoxActionPerformed
@@ -1122,10 +1020,10 @@ try {
         String sid = updateSidRouteTXT.getText();
         String tid = searchTrainId.getText();
         try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            PreparedStatement stm = con.prepareStatement("delete from Stop_at where Tid= ? and Sid = ?");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            PreparedStatement stm = con.prepareStatement("delete from Stopat where Tid= ? and Sid = ?");
             stm.setString(1,tid);
             stm.setString(2,sid);
             stm.executeUpdate();
@@ -1133,7 +1031,7 @@ try {
         DefaultTableModel tableModel = (DefaultTableModel) stopAtTable.getModel();
             tableModel.setRowCount(0);
             
-            PreparedStatement s = con.prepareStatement("select Stop_at.Sid as Sid,Time, Station.Name as Name from Stop_at, Station where Stop_at.Sid = Station.Sid and Tid = ? order by Time ASC");
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
             s.setString(1,tid);
             ResultSet rs1 = s.executeQuery();
             
@@ -1153,37 +1051,33 @@ try {
             Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void updateLocationRouteTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateLocationRouteTXTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateLocationRouteTXTActionPerformed
-//    private void updateLocationComboBox() {
-//        try {
-//            Class.forName(Driver);  
-//            String connectionUrl = URL;
-//            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-//            Statement stm = con.createStatement();
-//            
-//            
-//            ResultSet rs = stm.executeQuery("select Name from Station");
-//            
-//            while(rs.next()) {
-//                String name = rs.getString("Name");
-//                updateLocationRoute.addItem(name);
-//            }
-//            
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    /*private void updateLocationComboBox() {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
+            Statement stm = con.createStatement();
+            
+            
+            ResultSet rs = stm.executeQuery("select Name from Station");
+            
+            while(rs.next()) {
+                String name = rs.getString("Name");
+                updateLocationRoute.addItem(name);
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
     
     private void updateComboBox() {
         try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
             Statement stm = con.createStatement();
             
             
@@ -1206,9 +1100,9 @@ try {
     
     public void updateDepartSidComboBox() {
          try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
             Statement stm = con.createStatement();
             
             
@@ -1229,9 +1123,9 @@ try {
     
     public void updateArriveSidComboBox() {
          try {
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl);
             Statement stm = con.createStatement();
             
             
@@ -1249,73 +1143,72 @@ try {
         }
     }
     
-//    public void updateSidRouteComboBox() {
-//        ArrayList<String> stopAtSids = new ArrayList<String>();
-//        String tid = searchTrainId.getText();
-//        String s2;
-//        String s1 ;
-//        if (stations.indexOf(arriveSidComboBox.getSelectedItem().toString())>stations.indexOf(departSidComboBox.getSelectedItem().toString())) {
-//            System.out.println("haha");
-//            s1 = departSidComboBox.getSelectedItem().toString();
-//            s2= arriveSidComboBox.getSelectedItem().toString();
-//        } else {
-//            //Collections.reverse(stations);
-//            System.out.println("huhu");
-//            s2 = departSidComboBox.getSelectedItem().toString();
-//            s1= arriveSidComboBox.getSelectedItem().toString();
-//        }
-//        String stopAtStations="";
-//        for (int i = 0;i<stations.size();i++) {
-//            if (i>stations.indexOf(s1) && i<stations.indexOf(s2)) {
-//                stopAtStations+= "'"+stations.get(i)+"'";
-//                if (i==stations.indexOf(s2)-1) break;
-//                stopAtStations+= ", ";             
-//            }
-//        }
-//        System.out.println(s1+" " + s2);
-//       
-//        System.out.println(stopAtStations);
-//         try {
-//            Class.forName(Driver);  
-//            String connectionUrl = URL;
-//            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword); 
-//            
-//            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
-//            s.setString(1,tid);
-//            ResultSet rs1 = s.executeQuery();
-//            String stopAtSidsString="";
-//            while(rs1.next()){
-//                stopAtSids.add(rs1.getString("Sid"));
-//                
-//            }
-//            
-//            for (int i =0;i<stopAtSids.size();i++) {
-//                stopAtSidsString+="'"+stopAtSids.get(i)+"'";
-//                if (i==stopAtSids.size()-1) break;
-//                stopAtSidsString+= ", ";
-//            }
-//            
-//            System.out.println(stopAtSidsString);
-//            
-//            Statement stm = con.createStatement();
-//            ResultSet rs2 = stm.executeQuery("select Sid, Name from Station where Sid in (" + stopAtStations +") and Sid not in (" + stopAtSidsString + ")");
-//            
-//            while(rs2.next()) {
-//                String sid = rs2.getString("Sid");
-//                String name = rs2.getString("Name");
-//                updateSidRoute.addItem(sid);
-//                updateLocationRoute.addItem(name);
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    /*public void updateSidRouteComboBox() {
+        ArrayList<String> stopAtSids = new ArrayList<String>();
+        String tid = searchTrainId.getText();
+        String s2;
+        String s1 ;
+        if (stations.indexOf(arriveSidComboBox.getSelectedItem().toString())>stations.indexOf(departSidComboBox.getSelectedItem().toString())) {
+            System.out.println("haha");
+            s1 = departSidComboBox.getSelectedItem().toString();
+            s2= arriveSidComboBox.getSelectedItem().toString();
+        } else {
+            //Collections.reverse(stations);
+            System.out.println("huhu");
+            s2 = departSidComboBox.getSelectedItem().toString();
+            s1= arriveSidComboBox.getSelectedItem().toString();
+        }
+        String stopAtStations="";
+        for (int i = 0;i<stations.size();i++) {
+            if (i>stations.indexOf(s1) && i<stations.indexOf(s2)) {
+                stopAtStations+= "'"+stations.get(i)+"'";
+                if (i==stations.indexOf(s2)-1) break;
+                stopAtStations+= ", ";             
+            }
+        }
+        System.out.println(s1+" " + s2);
+       
+        System.out.println(stopAtStations);
+         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=RMSproject;user=sa;password=nasubi2002";
+            con = DriverManager.getConnection(connectionUrl); 
+            
+            PreparedStatement s = con.prepareStatement("select Stopat.Sid as Sid, CONVERT(VARCHAR(5),Time,108) as Time, Station.Name as Name from Stopat, Station where Stopat.Sid = Station.Sid and Tid = ? order by Time ASC");
+            s.setString(1,tid);
+            ResultSet rs1 = s.executeQuery();
+            String stopAtSidsString="";
+            while(rs1.next()){
+                stopAtSids.add(rs1.getString("Sid"));
+                
+            }
+            
+            for (int i =0;i<stopAtSids.size();i++) {
+                stopAtSidsString+="'"+stopAtSids.get(i)+"'";
+                if (i==stopAtSids.size()-1) break;
+                stopAtSidsString+= ", ";
+            }
+            
+            System.out.println(stopAtSidsString);
+            
+            Statement stm = con.createStatement();
+            ResultSet rs2 = stm.executeQuery("select Sid, Name from Station where Sid in (" + stopAtStations +") and Sid not in (" + stopAtSidsString + ")");
+            
+            while(rs2.next()) {
+                String sid = rs2.getString("Sid");
+                String name = rs2.getString("Name");
+                updateSidRoute.addItem(sid);
+                updateLocationRoute.addItem(name);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable AddRoute;
-    private com.toedter.calendar.JDateChooser addTime;
+    private javax.swing.JTextField addTime;
     private javax.swing.JComboBox<String> arriveSidComboBox;
     private javax.swing.JComboBox<String> coachIdComboBox;
     private javax.swing.JComboBox<String> departSidComboBox;
@@ -1349,15 +1242,16 @@ try {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable route;
     private javax.swing.JTextField searchTrainId;
     private javax.swing.JLabel stopAt;
     private javax.swing.JTable stopAtTable;
-    private com.toedter.calendar.JDateChooser trainArrivalTime;
+    private javax.swing.JTextField trainArrivalTime;
     private javax.swing.JTextField trainBrand;
-    private com.toedter.calendar.JDateChooser trainDepartureTime;
+    private javax.swing.JTextField trainDepartureTime;
     private javax.swing.JTextField trainNoSeat;
     private javax.swing.JTextField updateLocationRouteTXT;
     private javax.swing.JTextField updateSidRouteTXT;
-    private com.toedter.calendar.JDateChooser updateTimeRoute;
+    private javax.swing.JTextField updateTimeRoute;
     // End of variables declaration//GEN-END:variables
 }

@@ -769,10 +769,7 @@ public class addTrain extends javax.swing.JInternalFrame {
                 stopAtStationsList.add(stations.get(i));
             }
 
-            if (stopAtStationsList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No stations found between the selected points.");
-                return;
-            }
+           
 
             // Debugging
             System.out.println("Stop at stations: " + stopAtStationsList);
@@ -787,7 +784,7 @@ public class addTrain extends javax.swing.JInternalFrame {
                 for (int i = 0; i < stopAtStationsList.size(); i++) {
                     placeholders.append("?");
                     if (i < stopAtStationsList.size() - 1) {
-                        placeholders.append(", ");
+                        placeholders.append(",");
                     }
                 }
 
@@ -839,18 +836,30 @@ public class addTrain extends javax.swing.JInternalFrame {
         pst = con.prepareStatement(arrivalQuery);
         pst.setString(1, tid); // Assuming tid is available from the current context
         ResultSet rs = pst.executeQuery();
-        
+        Date arrivalTimeString = null;
+        Date departTimeString = null;
         if (rs.next()) {
-            Date arrivalTimeString = rs.getDate("Arrival_time"); // Fetch the arrival date from DB
-            Date departTimeString = rs.getDate("Departure_time");
-            // Parse the arrival time string into Date objects for comparison
+            arrivalTimeString = rs.getDate("Arrival_time"); // Fetch the arrival date from DB
+            departTimeString = rs.getDate("Departure_time");
+        }
+
+        String stop_at_Times = "SELECT Time FROM stop_at WHERE Tid = ?";
+        pst = con.prepareStatement(stop_at_Times);
+        pst.setString(1, tid);
+        rs = pst.executeQuery();
+        while (rs.next()) {
             
+            // Parse the arrival time string into Date objects for comparison
+            Date stop_atTime = rs.getDate("Time");
             
             // Compare the selected time with the arrival time
-            if (addTime.getDate().after(arrivalTimeString)|| addTime.getDate().before(departTimeString)) {
+            if (addTime.getDate().after(arrivalTimeString) || addTime.getDate().before(departTimeString) ||
+                addTime.getDate().equals(departTimeString) || addTime.getDate().equals(arrivalTimeString)|| 
+                addTime.getDate().equals(stop_atTime)) {
                 JOptionPane.showMessageDialog(null, "Invalid date!");
                 return; // Exit method if the date is invalid
             }
+            System.out.println(rs.getString("Time"));
         }
         
         // If everything is valid, insert the new Stop_at entry
