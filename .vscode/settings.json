@@ -1,9 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "lib\\jcalendar-1.4.jar",
-        "lib\\mysql-connector-j-9.1.0.jar",
-        "c:\\Users\\faZe\\Downloads\\RailwaySystemEdited\\RailwaySystem\\lib\\mysql-connector-j-9.1.0.jar",
-        "c:\\Users\\faZe\\Downloads\\RailwaySystemEdited\\RailwaySystem\\lib\\jcalendar-1.4.jar"
+        "lib/**/*.jar",
+        "Railway-System/lib/jcalendar-1.4.jar",
+        "Railway-System/lib/mysql-connector-j-9.1.0.jar"
     ],
     "java.project.sourcePaths": [
         "src"
