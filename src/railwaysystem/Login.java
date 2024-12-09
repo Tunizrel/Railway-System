@@ -166,14 +166,14 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         user = username.getText();
         pass = password.getText();
-
+        
         if (user.isEmpty() || pass.isEmpty()) {
             JOptionPane.showMessageDialog(this,"Username or password does not match");
         } else {
             try {
                 Class.forName(Driver);
                 String connectionUrl = URL;
-                con = (Connection) DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
+                Connection con =  DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
 
                 pst = con.prepareStatement("select * from user where username= ? and pass = ?");
                 pst.setString(1,user);

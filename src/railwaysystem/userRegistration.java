@@ -21,7 +21,7 @@ public class userRegistration extends javax.swing.JInternalFrame {
      */
     public userRegistration()  {
         initComponents();
-        autoID();
+        
         //autoPassengerIdGeneration();
     }
 
@@ -47,27 +47,14 @@ public class userRegistration extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        userName = new javax.swing.JTextField();
-        userEmail = new javax.swing.JTextField();
-        userPhone = new javax.swing.JTextField();
-        userAddress = new java.awt.TextArea();
-        femaleButton = new javax.swing.JRadioButton();
-        maleButton = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         usernameAccount = new javax.swing.JTextField();
         userPassword = new javax.swing.JPasswordField();
         userConfirmPassword = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        userId = new javax.swing.JTextField();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -99,54 +86,6 @@ public class userRegistration extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Confirm password");
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Gender");
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Email");
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Address");
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Phone number");
-
-        userName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameActionPerformed(evt);
-            }
-        });
-
-        userPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userPhoneActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(femaleButton);
-        femaleButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        femaleButton.setForeground(new java.awt.Color(255, 255, 255));
-        femaleButton.setText("Female");
-        femaleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                femaleButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(maleButton);
-        maleButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        maleButton.setForeground(new java.awt.Color(255, 255, 255));
-        maleButton.setText("Male");
-        maleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maleButtonActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Create");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,10 +100,6 @@ public class userRegistration extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Name");
-
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Password");
@@ -178,93 +113,53 @@ public class userRegistration extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jButton1)
-                        .addGap(100, 100, 100)
+                        .addGap(85, 85, 85)
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(femaleButton)
-                                    .addGap(24, 24, 24)
-                                    .addComponent(maleButton)))
-                            .addComponent(userPassword)
-                            .addComponent(usernameAccount)
-                            .addComponent(userAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                            .addComponent(userPhone)
-                            .addComponent(userEmail)
-                            .addComponent(userConfirmPassword))))
-                .addGap(24, 24, 24))
+                        .addGap(18, 18, 18)
+                        .addComponent(userConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(femaleButton)
-                    .addComponent(maleButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(userPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(userAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usernameAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(11, 11, 11)
+                    .addComponent(jLabel10)
+                    .addComponent(usernameAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(userPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(userConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setText("Account Registration");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setText("User ID");
-
-        userId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userIdActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -478,17 +373,12 @@ public class userRegistration extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(jLabel7)
-                        .addGap(75, 75, 75)
-                        .addComponent(userId, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(238, 238, 238)
-                        .addComponent(jLabel6)))
-                .addContainerGap(402, Short.MAX_VALUE))
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(430, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 501, Short.MAX_VALUE)
@@ -501,12 +391,8 @@ public class userRegistration extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(userId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 293, Short.MAX_VALUE)
@@ -516,131 +402,8 @@ public class userRegistration extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void autoID() {
-        try {
-        Class.forName(Driver);
-        String connectionUrl = URL;
-        Connection con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
-
-        // Query to retrieve existing IDs
-        Statement s = con.createStatement();
-        ResultSet rs = s.executeQuery("SELECT (SUBSTRING(Pid, 3, 8)) AS pid FROM passenger");
-
-        // Load existing IDs into a HashSet for duplication checking
-        HashSet<Integer> existingIds = new HashSet<>();
-        while (rs.next()) {
-            String pid = rs.getString("pid");
-            if (pid != null) {
-                existingIds.add(Integer.parseInt(pid));
-            }
-        }
-
-        // Generate a new unique ID
-        int id;
-        do {
-            id = (int) (Math.random() * 89999999) + 10000000; // Random 8-digit number
-        } while (existingIds.contains(id));
-
-        // Set the new ID
-        userId.setText("VN" + id);
-
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-    }
-}
+   
     
-    private void userIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userIdActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.hide();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-      // TODO add your handling code here:
-    String pid = userId.getText();
-    String name = userName.getText();
-    String email = userEmail.getText();
-    String phoneNo = userPhone.getText();
-    String gender;
-    String address = userAddress.getText();
-    String username = usernameAccount.getText();
-    String password = userPassword.getText();
-    String confirmPassword = userConfirmPassword.getText();
-
-    if (femaleButton.isSelected()) {
-        gender = "F";
-    } else {
-        gender = "M";
-    }
-
-    try {
-        Class.forName(Driver);
-        String connectionUrl = URL;
-        con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
-
-        pst = con.prepareStatement("select username from user where username = ?");
-        pst.setString(1, username);
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-            JOptionPane.showMessageDialog(null, "The username is already taken.");
-        } else {
-            if (!password.equals(confirmPassword)) {
-                JOptionPane.showMessageDialog(null, "Your password confirmation does not match.\nPlease try again!");
-                return; // Exit the method if passwords don't match
-            }
-
-            pst = con.prepareStatement("insert into Passenger(Pid, Name, Address, Phone_no, Email, Gender) values(?, ?, ?, ?, ?, ?);");
-            pst.setString(1, pid);
-            pst.setString(2, name);
-            pst.setString(3, address);
-            pst.setString(4, phoneNo);
-            pst.setString(5, email);
-            pst.setString(6, gender);
-
-            PreparedStatement pst1 = con.prepareStatement("insert into user(username, pass,Pid) values (?,?, ?);");
-            pst1.setString(1, username);
-            pst1.setString(2, password);
-            pst1.setString(3, pid);
-
-            pst.executeUpdate();
-            pst1.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registration successful");
-        }
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(userRegistration.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(userRegistration.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void maleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_maleButtonActionPerformed
-
-    private void femaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_femaleButtonActionPerformed
-
-    private void userPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userPhoneActionPerformed
-        // TODO add your handling code here:
-       
-        
-    }//GEN-LAST:event_userPhoneActionPerformed
-
-    private void userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_userNameActionPerformed
-
     private void userName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userName1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userName1ActionPerformed
@@ -668,30 +431,59 @@ public class userRegistration extends javax.swing.JInternalFrame {
     private void userId1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userId1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userId1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        String username = usernameAccount.getText();
+        String password = userPassword.getText();
+        String confirmPassword = userConfirmPassword.getText();
+
+        try {
+            Class.forName(Driver);
+            String connectionUrl = URL;
+            con = DriverManager.getConnection(connectionUrl, DBuser, DBpassword);
+
+            pst = con.prepareStatement("select username from user where username = ?");
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "The username is already taken.");
+            } else {
+                if (!password.equals(confirmPassword)) {
+                    JOptionPane.showMessageDialog(null, "Your password confirmation does not match.\nPlease try again!");
+                    return; // Exit the method if passwords don't match
+                }
+
+  
+
+                PreparedStatement pst1 = con.prepareStatement("insert into user(username, pass) values (?,?);");
+                pst1.setString(1, username);
+                pst1.setString(2, password);
+
+                pst.executeQuery();
+                pst1.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registration successful");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(userRegistration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(userRegistration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
      
 
-     public void autoPassengerIdGeneration() {
-    //      String name = userName.getText();
-    //     String phoneNo = userPhone.getText(); 
 
-    // // Split the name into first name and last name (assuming space separates them)
-    // String[] nameParts = name.split(" ");
-
-    // // Get the first letter of each part of the name (first name and last name)
-    // String firstLetter = nameParts[0].substring(0, 1).toUpperCase();  // First letter of first name
-    // String secondLetter = nameParts.length > 1 ? nameParts[1].substring(0, 1).toUpperCase() : "";  // First letter of last name (if exists)
-
-    // // Generate the ID by concatenating the first letters and the phone number
-    // String generatedId = firstLetter + secondLetter + phoneNo;
-
-    // // Display or set the ID (assuming you have a JTextField to show the ID)
-    // userId.setText(generatedId);
-    }   
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JRadioButton femaleButton;
     private javax.swing.JRadioButton femaleButton1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -709,32 +501,20 @@ public class userRegistration extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton maleButton;
     private javax.swing.JRadioButton maleButton1;
-    private java.awt.TextArea userAddress;
     private java.awt.TextArea userAddress1;
     private javax.swing.JPasswordField userConfirmPassword;
     private javax.swing.JPasswordField userConfirmPassword1;
-    private javax.swing.JTextField userEmail;
     private javax.swing.JTextField userEmail1;
-    private javax.swing.JTextField userId;
     private javax.swing.JTextField userId1;
-    private javax.swing.JTextField userName;
     private javax.swing.JTextField userName1;
     private javax.swing.JPasswordField userPassword;
     private javax.swing.JPasswordField userPassword1;
-    private javax.swing.JTextField userPhone;
     private javax.swing.JTextField userPhone1;
     private javax.swing.JTextField usernameAccount;
     private javax.swing.JTextField usernameAccount1;
