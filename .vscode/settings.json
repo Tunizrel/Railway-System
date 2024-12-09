@@ -1,9 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "Railway-System/lib/jcalendar-1.4.jar",
-        "Railway-System/lib/mysql-connector-j-9.1.0.jar"
-    ],
+    "/lib/**/*.jar",
+],
+    "java.project.outputPath": "bin",
     "java.project.sourcePaths": [
         "src"
     ]

@@ -21,7 +21,7 @@ public class searchPassenger extends javax.swing.JInternalFrame {
     
     public searchPassenger()  {
         initComponents();
-        showAll();
+       
     }
 
     /**
@@ -60,6 +60,7 @@ public class searchPassenger extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         searchBox = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -193,6 +194,13 @@ public class searchPassenger extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setText("Search");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,7 +211,9 @@ public class searchPassenger extends javax.swing.JInternalFrame {
                         .addGap(62, 62, 62)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -215,7 +225,9 @@ public class searchPassenger extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -264,7 +276,7 @@ public class searchPassenger extends javax.swing.JInternalFrame {
             String connectionUrl = URL;
             con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
             
-            pst = con.prepareStatement("update Passenger set Name=?,Gender=?,Email=?,Phone=?,Address=? where Pid = ?");
+            pst = con.prepareStatement("update Passenger set Name=?,Gender=?,Email=?,Phone_no=?,Address=? where Pid = ?");
             
             
             pst.setString(1,name);
@@ -284,25 +296,25 @@ public class searchPassenger extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    private void showAll() {
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String pid = searchBox.getText();
         try {
             Class.forName(Driver);
             String connectionUrl= URL;
             con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
             
-            pst = con.prepareStatement("select * from Passenger where Pid IN (select Uid from [User] where Username = ?)");
-            pst.setString(1,Login.user);
+            pst = con.prepareStatement("select * from Passenger where Pid = ?");
+            pst.setString(1,pid);
             ResultSet rs = pst.executeQuery();
 
             if(rs.next() == false ) {
                 JOptionPane.showMessageDialog(this, "Not found");
             } else {
-                String pid = rs.getString("Pid");
                 String name = rs.getString("Name");
                 String gender = rs.getString("Gender");
                 String email =rs.getString("Email");
-                String phoneNo=rs.getString("Phone");
+                String phoneNo=rs.getString("Phone_no");
                 String address = rs.getString("Address");
 
                 if (gender.equals("F")) {
@@ -326,12 +338,18 @@ public class searchPassenger extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(searchPassenger.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    private void showAll() {
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton femaleButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
