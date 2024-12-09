@@ -128,7 +128,7 @@ public class allTickets extends javax.swing.JInternalFrame {
                 String seatNo = rs.getString("Seat_no");
                 String price = rs.getString("Price");
                 
-                String table[] = {bid,ticketClass,pid,tid,seatNo,price};
+                String table[] = {bid,pid,ticketClass,tid,seatNo,price};
                 
                 tableModel = (DefaultTableModel) ticketTable.getModel();
                 tableModel.addRow(table);

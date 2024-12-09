@@ -20,7 +20,7 @@ public class addPassenger extends javax.swing.JInternalFrame {
      */
     public addPassenger()  {
         initComponents();
-        //autoPassengerIdGeneration();
+        autoPassengerIdGeneration();
     }
 
     /**
@@ -228,12 +228,14 @@ public class addPassenger extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String pid = passengerID.getText();
+         String pid = passengerID.getText();
         String name = passengerName.getText();
         String email = passengerEmail.getText();
         String phoneNo = passengerPhoneNo.getText();
         String address = passengerAddress.getText();
         String gender;
+
+        
         
         if(femaleButton.isSelected()) {
             gender = "F";
