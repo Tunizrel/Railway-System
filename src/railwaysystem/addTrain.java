@@ -553,26 +553,7 @@ public class addTrain extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void coachIdComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachIdComboBoxActionPerformed
-        try{
-            Class.forName(Driver);  
-            String connectionUrl = URL;
-            con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            Statement s = con.createStatement();
-            ResultSet rs;
-            rs = s.executeQuery("Select Eid from employee ");
-            coachIdComboBox.removeAllItems();
-
-        // Add items to the combo box
-           while (rs.next()) {
-            String eid = rs.getString("Eid");
-            coachIdComboBox.addItem(eid);
-        }
-        }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_coachIdComboBoxActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -755,7 +736,8 @@ public class addTrain extends javax.swing.JInternalFrame {
 
             String s1 = departSid.getSelectedItem().toString();
             String s2 = arriveSid.getSelectedItem().toString();
-
+            updateCoachIdComboBox();
+            
             // Determine the order based on index comparison
             boolean isDescending = stations.indexOf(s2) < stations.indexOf(s1);
             String order = isDescending ? "DESC" : "ASC";
@@ -936,26 +918,27 @@ public class addTrain extends javax.swing.JInternalFrame {
     }
     
     public void updateCoachIdComboBox() {
-        try {
+        String StationID =departSid.getSelectedItem().toString();
+        try{
             Class.forName(Driver);  
             String connectionUrl = URL;
             con = DriverManager.getConnection(connectionUrl,DBuser,DBpassword);
-            Statement stm = con.createStatement();
-            
-            String Sid = departSid.getSelectedItem().toString();
-            
-            ResultSet rs = stm.executeQuery("SELECT Eid FROM Employee WHERE Sid ='"+Sid+"'");
-            
-            while(rs.next()) {
-                String eid = rs.getString("Eid");
-                coachIdComboBox.addItem(eid);
-            }
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
+            PreparedStatement s = con.prepareStatement("SELECT Eid FROM Employee WHERE Sid = ?");
+            s.setString(1, StationID);
+            ResultSet rs;
+            rs = s.executeQuery();            
+            coachIdComboBox.removeAllItems();
+
+        // Add items to the combo box
+           while (rs.next()) {
+            String eid = rs.getString("Eid");
+            coachIdComboBox.addItem(eid);
+        }
+        }
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(addPassenger.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"No Coach available at the moment ");
+            Logger.getLogger(searchStation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
